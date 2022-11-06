@@ -1,20 +1,28 @@
 # Exp-06-Configuration-of-ADC-for-converting-analog-to-digital-signals
 
+```python
 
-## Name :	
-## Roll no:
-## Date of experiment : 
+Name :	Monisha T
+Roll no: 212221240029
+Date of experiment : 06/11/2022
+
+```  
   
-  
-## Aim: To configure internal ADC for   LPC2148 ARM 7 and write a code for displaying the values varying from 0v to 3.3v to its equivalent digital values 
-## Components required: Proteus ISIS professional suite, Kiel μ vision 5 Development environment 
+# AIM: 
+
+To configure internal ADC for   LPC2148 ARM 7 and write a code for displaying the values varying from 0v to 3.3v to its equivalent digital values 
+
+## COMPONENTS REQUIRED: 
+
+Proteus ISIS professional suite, Kiel μ vision 5 Development environment 
  
  ![image](https://user-images.githubusercontent.com/36288975/198947663-2d75f694-880a-4bc0-be67-8c2d4125fdb6.png)
 
 Figure-01 ADC pins in LPC2148 ARM 7 controller 
 
 
- ## Theory 
+# THEORY
+
 Analog to Digital Converter (ADC) is used to convert analog signal into digital form. LPC2148 has two inbuilt 10-bit ADC i.e. ADC0 & ADC1.
 •	ADC0 has 6 channels &ADC1 has 8 channels.
 •	Hence, we can connect 6 distinct types of input analog signals to ADC0 and 8 distinct types of input analog signals to ADC1.
@@ -31,7 +39,8 @@ These are the power and ground pins for ADC. These should be same as VDD & VSS.
 Let’s see the ADC registers which are used to control and monitors the ADC operation.
 Here, we will see ADC0 registers and their configurations. ADC1 has similar registers and can be configured in a similar manner.
  
-## ADC0 Registers 
+## ACD0 REGISTERS
+
 1.  AD0CR (ADC0 Control Register)
 •	AD0CR is a 32-bit register.
 •	This register must be written to select the operating mode before A/D conversion can occur.
@@ -176,33 +185,63 @@ ADxDRy. E.g. AD0DR1 contains ADC result of channel 1 of ADC0.
 
 Figure -08 Circuit diagram of interfacing an POT with ADC input pin 
 
-## Kiel - Program 
+# KIELL - PROGRAM
+
+```python
+
+#include <lpc214x.h>
+#include "LCD.h"
+#include "ADC.h"
+
+unsigned int val;
+int main()
+{
+	IO1DIR = 0xffffffff;
+	IO0DIR = 0x00000000;
+	PINSEL0 = 0x300;
+	VPBDIV = 0x02;
+	lcd_init();
+	show(" ADC Value: ");
+	while(1)
+	{
+		cmd(0x8b);
+		val = adc(0,6);
+		dat((val/1000)+48);
+		dat(((val/100)%10)+48);
+		dat(((val/10)%10)+48);
+		dat((val%10)+48);
+	}
+}
+
+```
  
-## Tabulations and graph 
-SL NO	% OF POT VALUE	ADC VALUE
-1		
-2		
-3		
-4		
-5		
-6		
-7		
-8		
-9		
-10		
+# TABULATION :
 
- ![image](https://user-images.githubusercontent.com/36288975/198947184-dbccf4b1-10a1-4090-a670-93526ed6e597.png)
+![output](./4%20(1).png)
 
+# GRAPH :
 
+![output](./4%20(2).png)
 
- 
 Figure -09 graph between % of pot(1Kohm) values and ADC 
 
+# OUTPUT :
 
-Result :
+## BEFORE STIMULATION :
+
+![output](./2.png)
+
+## AFTER STIMULATION :
+
+![output](./1.png)
+
+## CIRCUIT DIAGRAM :
+
+![output](./3.png)
+		
+# RESULT :
 Configuring an ADC and the input values are displayed on LCD screen 
 
-Output screen shots :
 
 
 
